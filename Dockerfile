@@ -27,17 +27,19 @@ RUN apt-get update && apt-get install -y \
     && apt-get purge --auto-remove -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Add Chrome as a user
-RUN groupadd -r chrome --gid=1000 \
-    && useradd -r -g chrome --uid=1000 -G audio,video chrome \
-    && mkdir -p /usr/src/app \
-    && chown -R chrome:chrome /usr/src/app
+# add chrome user uid 1000
+RUN groupadd --gid=1000 chrome \
+    && useradd -m -g chrome --uid=1000 -G audio,video chrome
 
-# Run Chrome non-privileged
 USER chrome
-WORKDIR /usr/src/app
+
+ENV WORKDIR /usr/src/app
+
+# put app here
+WORKDIR ${WORKDIR}
 
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
+CMD ["--version"]
 

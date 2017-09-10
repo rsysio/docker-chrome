@@ -27,19 +27,17 @@ RUN apt-get update && apt-get install -y \
     && apt-get purge --auto-remove -y \
     && rm -rf /var/lib/apt/lists/*
 
-# add chrome user uid 1000
-RUN groupadd --gid=1000 chrome \
-    && useradd -m -g chrome --uid=1000 -G audio,video chrome
+# add chrome user
+RUN groupadd -r chrome \
+    && useradd -r -m -g chrome -G audio,video chrome
 
 USER chrome
 
-ENV WORKDIR /usr/src/app
-
 # put app here
+ENV WORKDIR /usr/src/app
 WORKDIR ${WORKDIR}
 
 COPY entrypoint.sh /entrypoint.sh
-
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["--version"]
 

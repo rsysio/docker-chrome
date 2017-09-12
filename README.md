@@ -4,12 +4,12 @@ headless chrome, python3
 
 ### Print python version
 ```
-docker run -it --rm chrome
+docker run -it --rm rsysio/chrome
 ```
 
 ### Run python script
 ```
-docker run -it --rm --cap-add=SYS_ADMIN -v ${PWD}:/usr/src/app chrome myscript.py
+docker run -it --rm --cap-add=SYS_ADMIN -v ${PWD}:/usr/src/app rsysio/chrome myscript.py
 ```
 
 ### docker-compose
@@ -19,7 +19,7 @@ version: '3.3'
 services:
 
   myservice:
-    image: rsysio/chrome:latest
+    image: rsysio/chrome
     cap_add:
       - SYS_ADMIN
     volumes:

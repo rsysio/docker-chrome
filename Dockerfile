@@ -1,4 +1,4 @@
-FROM python:3.6-slim
+FROM debian:sid-slim
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -33,11 +33,10 @@ RUN groupadd -r chrome \
 
 USER chrome
 
-# put app here
-ENV WORKDIR /usr/src/app
-WORKDIR ${WORKDIR}
+# Expose port 9222
+EXPOSE 9222
 
-COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["--version"]
+# Autorun chrome headless with no GPU
+ENTRYPOINT [ "google-chrome-stable" ]
+CMD [ "--headless", "--disable-gpu", "--remote-debugging-address=0.0.0.0", "--remote-debugging-port=9222" ]
 

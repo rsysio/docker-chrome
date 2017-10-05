@@ -1,4 +1,4 @@
-FROM debian:sid-slim
+FROM debian:jessie-slim
 
 ENV DEBIAN_FRONTEND noninteractive
 

@@ -40,5 +40,5 @@ USER chrome
 # Expose port 9515
 EXPOSE 9515
 
-CMD ["chromedriver", "--whitelisted-ips=''"]
+CMD ["chromedriver", "--whitelisted-ips"]
 

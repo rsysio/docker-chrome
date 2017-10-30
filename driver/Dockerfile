@@ -25,6 +25,12 @@ RUN apt-get update && apt-get install -y \
     && apt-get purge --auto-remove -y curl unzip \
     && rm -rf /var/lib/apt/lists/*
 
+# Add Tini
+ENV TINI_VERSION v0.16.1
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+ENTRYPOINT ["/tini", "--"]
+
 # add chrome user
 RUN groupadd -r chrome \
     && useradd -r -m -g chrome -G audio,video chrome
@@ -33,12 +39,6 @@ USER chrome
 
 # Expose port 9515
 EXPOSE 9515
-
-# Add Tini
-ENV TINI_VERSION v0.16.1
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
-ENTRYPOINT ["/tini", "--"]
 
 CMD ["chromedriver", "--whitelisted-ips=''"]
 
